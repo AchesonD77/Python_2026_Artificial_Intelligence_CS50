@@ -29,13 +29,22 @@ In this course, we will explore some of the ideas that make AI possible:
 6. **Language**  
    Processing natural language, which is produced and understood by humans.
 
+(20251124)
+
 ---
 
 ## Search
 
-Search problems involve an **agent** that is given an *initial state* and a *goal state*, and it returns a *solution* of how to get from the former to the latter. A navigator app uses a typical search process, where the agent (the “thinking” part of the program) receives as input your current location and your desired destination and, based on a search algorithm, returns a suggested path. However, there are many other forms of search problems, like puzzles or mazes.
+Search problems involve an **agent** that is given an *initial state* and a *goal state*, and it returns a *solution* of how to get from the former to the latter. 
+A navigator app uses a typical search process, where the agent (the “thinking” part of the program) receives as input your current location and your desired destination and, based on a search algorithm, returns a suggested path. 
+However, there are many other forms of search problems, like puzzles or mazes.
+
 
 Finding a solution to a **15‑puzzle** would require the use of a search algorithm. To formalize such problems, we introduce several key components (all of these are **core concepts** — <mark>very important</mark>):
+
+<p align="center">
+  <img src="l_00_00.png" width="400" alt="Lecture 0 Search Puzzle">
+</p>
 
 - **Agent**  
   An entity that perceives its environment and acts upon that environment. In a navigator app, for example, the agent would be a representation of a car that needs to decide which actions to take to arrive at the destination.
@@ -57,8 +66,14 @@ Finding a solution to a **15‑puzzle** would require the use of a search algori
 - **State Space**  
   The set of all states reachable from the initial state by any sequence of actions. For example, in a 15‑puzzle, the state space consists of all the \(16! / 2\) configurations of the board that can be reached from any initial state. The state space can be visualized as a directed graph with states represented as *nodes* and actions represented as arrows between nodes.
 
+<p align="center">
+  <img src="l_00_01.png" width="500" alt="Lecture 0 Search Puzzle">
+</p>
+
 - **Goal Test**  
-  The condition that determines whether a given state is a goal state. For example, in a navigator app, the goal test would be whether the current location of the agent (the representation of the car) is at the destination. If it is — problem solved. If it is not — we continue searching.
+  The condition that determines whether a given state is a goal state. For example, in a navigator app, the goal test would be whether the current location of the agent (the representation of the car) is at the destination. 
+  
+  If it is — problem solved. If it is not — we continue searching.
 
 - **Path Cost**  
   A numerical cost associated with a given path. For example, a navigator app does not simply bring you to your goal; it does so while *minimizing* the path cost, finding the fastest or cheapest way possible for you to get to your goal state.
@@ -92,6 +107,8 @@ However, nodes are simply a data structure — they do **not** search; they only
    Else,  
    - *Expand* the node (find all the new nodes that could be reached from this node), and add the resulting nodes to the frontier.  
    - Add the current node to the explored set.
+
+(20251125)
 
 ---
 
