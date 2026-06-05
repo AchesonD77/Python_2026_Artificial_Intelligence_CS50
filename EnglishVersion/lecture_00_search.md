@@ -21,7 +21,7 @@ In this course, we will explore some of the ideas that make AI possible:
    Finding not only a correct way to solve a problem, but a better — or the *best* — way to solve it.
 
 4. **Learning**  
-   Improving performance based on access to data and experience. For example, your email is able to distinguish spam from non‑spam mail based on past experience.
+   **Improving performance based on access to data and experience**. For example, your email is able to distinguish spam from non‑spam mail based on past experience.
 
 5. **Neural Networks**  
    A program structure inspired by the human brain that is able to perform tasks effectively.
@@ -29,22 +29,24 @@ In this course, we will explore some of the ideas that make AI possible:
 6. **Language**  
    Processing natural language, which is produced and understood by humans.
 
-(20251124)
 
 ---
 
 ## Search
 
 Search problems involve an **agent** that is given an *initial state* and a *goal state*, and it returns a *solution* of how to get from the former to the latter. 
+
 A navigator app uses a typical search process, where the agent (the “thinking” part of the program) receives as input your current location and your desired destination and, based on a search algorithm, returns a suggested path. 
+
 However, there are many other forms of search problems, like puzzles or mazes.
 
-
-Finding a solution to a **15‑puzzle** would require the use of a search algorithm. To formalize such problems, we introduce several key components (all of these are **core concepts** — <mark>very important</mark>):
 
 <p align="center">
   <img src="l_00_00.png" width="400" alt="Lecture 0 Search Puzzle">
 </p>
+
+Finding a solution to a **15‑puzzle** would require the use of a search algorithm. To formalize such problems, we introduce several key components (all of these are **core concepts** — <mark>very important</mark>):
+
 
 - **Agent**  
   An entity that perceives its environment and acts upon that environment. In a navigator app, for example, the agent would be a representation of a car that needs to decide which actions to take to arrive at the destination.
@@ -61,22 +63,29 @@ Finding a solution to a **15‑puzzle** would require the use of a search algori
 
 - **Transition Model**  
   A description of what state results from performing any applicable action in any state. More precisely, the transition model can be defined as a function. Upon receiving state *s* and action *a* as input, `Result(s, a)` returns the state resulting from performing action *a* in state *s*.  
+  
   For example, given a certain configuration of a 15‑puzzle (state *s*), moving a square in any direction (action *a*) will bring us to a new configuration of the puzzle (the new state).
 
 - **State Space**  
-  The set of all states reachable from the initial state by any sequence of actions. For example, in a 15‑puzzle, the state space consists of all the \(16! / 2\) configurations of the board that can be reached from any initial state. The state space can be visualized as a directed graph with states represented as *nodes* and actions represented as arrows between nodes.
+  The set of all states reachable from the initial state by any sequence of actions. For example, in a 15‑puzzle, the state space consists of all the \(16! / 2\) configurations of the board that can be reached from any initial state. 
+  
+  The state space can be visualized as a directed graph with states represented as *nodes* and actions represented as arrows between nodes.
 
 <p align="center">
   <img src="l_00_01.png" width="500" alt="Lecture 0 Search Puzzle">
 </p>
 
 - **Goal Test**  
-  The condition that determines whether a given state is a goal state. For example, in a navigator app, the goal test would be whether the current location of the agent (the representation of the car) is at the destination. 
+  The condition that determines whether a given state is a goal state. 
+  
+  For example, in a navigator app, the goal test would be whether the current location of the agent (the representation of the car) is at the destination. 
   
   If it is — problem solved. If it is not — we continue searching.
 
 - **Path Cost**  
-  A numerical cost associated with a given path. For example, a navigator app does not simply bring you to your goal; it does so while *minimizing* the path cost, finding the fastest or cheapest way possible for you to get to your goal state.
+  A numerical cost associated with a given path. 
+  
+  For example, a navigator app does not simply bring you to your goal; it does so while *minimizing* the path cost, finding the fastest or cheapest way possible for you to get to your goal state.
 
 ---
 
@@ -95,9 +104,15 @@ In a search process, data is often stored in a **node**, a data structure that c
 - The **action** that was applied to the state of the parent to get to the current node  
 - The **path cost** from the initial state to this node  
 
-Nodes contain information that makes them very useful for the purposes of search algorithms. They contain a state, which can be checked using the goal test to see if it is the final state. If it is, the node’s path cost can be compared to other nodes’ path costs, which allows choosing the *optimal* solution. Once the node is chosen, by virtue of storing the parent node and the action that led from the parent to the current node, it is possible to trace back every step of the way from the initial state to this node, and this sequence of actions is the solution.
+Nodes contain information that makes them very useful for the purposes of search algorithms. 
 
-However, nodes are simply a data structure — they do **not** search; they only hold information. To actually search, we use the **frontier**, the mechanism that “manages” the nodes. The frontier starts by containing an initial state and an empty set of explored items, and then repeats the following actions until a solution is reached:
+They contain a state, which can be checked using the goal test to see if it is the final state. If it is, the node’s path cost can be compared to other nodes’ path costs, which allows choosing the *optimal* solution. 
+
+Once the node is chosen, by virtue of storing the parent node and the action that led from the parent to the current node, it is possible to trace back every step of the way from the initial state to this node, and this sequence of actions is the solution.
+
+However, nodes are simply a data structure — they do **not** search; they only hold information. 
+
+To actually search, we use the **frontier**, the mechanism that “manages” the nodes. The frontier starts by containing an initial state and an empty set of explored items, and then repeats the following actions until a solution is reached:
 
 1. If the frontier is empty,  
    - *Stop.* There is no solution to the problem.
@@ -108,20 +123,29 @@ However, nodes are simply a data structure — they do **not** search; they only
    - *Expand* the node (find all the new nodes that could be reached from this node), and add the resulting nodes to the frontier.  
    - Add the current node to the explored set.
 
-(20251125)
 
 ---
 
 ## Depth‑First Search (DFS)
 
-In the previous description of the frontier, one thing went unmentioned: at step 2 in the pseudocode above, **which node should be removed?** This choice has implications for the quality of the solution and how fast it is achieved. There are multiple ways to answer the question of which nodes should be considered first. Two important strategies can be represented by the data structures of a **stack** (in depth‑first search) and a **queue** (in breadth‑first search); there is even a cute cartoon demonstration of the difference between the two.
+In the previous description of the frontier, one thing went unmentioned: at step 2 in the pseudocode above, **which node should be removed?** 
 
-We start with the **depth‑first search (DFS)** approach.
+This choice has implications for the quality of the solution and how fast it is achieved. There are multiple ways to answer the question of which nodes should be considered first. 
 
-A depth‑first search algorithm explores one direction as far as possible *before* trying another direction. In these cases, the frontier is managed as a **stack** data structure. The catchphrase you need to remember here is <mark>*last‑in first‑out*</mark>. After nodes are added to the frontier, the first node to remove and consider is the *last* one that was added. This results in a search algorithm that goes as deep as possible in the first direction that gets in its way, while leaving all other directions for later.
+Two important strategies can be represented by the data structures of a **stack** (in depth‑first search) and a **queue** (in breadth‑first search); there is even a cute cartoon demonstration of the difference between the two (https://www.youtube.com/watch?v=2wM6_PuBIxY).
+
+<mark>We start with the **depth‑first search (DFS)** approach.
+</mark>
+
+
+A depth‑first search algorithm explores one direction as far as possible *before* trying another direction. In these cases, the frontier is managed as a **stack** data structure. 
+
+The catchphrase you need to remember here is <mark>*last‑in first‑out*</mark>. After nodes are added to the frontier, the first node to remove and consider is the *last* one that was added. This results in a search algorithm that goes as deep as possible in the first direction that gets in its way, while leaving all other directions for later.
 
 *(Example from outside the lecture)*:  
-Imagine you are looking for your keys. In a depth‑first search approach, if you choose to start with searching in your pants, you would first go through **every single pocket**, emptying each pocket and going through the contents carefully. You will stop searching in your pants and start searching elsewhere only once you have *completely exhausted* the search in every pocket of your pants.
+Imagine you are looking for your keys. 
+
+In a depth‑first search approach, if you choose to start with searching in your pants, you would first go through **every single pocket**, emptying each pocket and going through the contents carefully. You will stop searching in your pants and start searching elsewhere only once you have *completely exhausted* the search in every pocket of your pants.
 
 **Pros of DFS**
 
@@ -149,7 +173,13 @@ def remove(self):
         self.frontier = self.frontier[:-1]
         return node
 ```
+node = self.frontier[-1]
+means 
+Take the last element in the frontier list 
+Assign to node
 
+
+self.frontier[:-1] means All elements except the last element = Go from the beginning to just before the last element = Remove the last element
 ---
 
 ## Breadth‑First Search (BFS)

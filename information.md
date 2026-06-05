@@ -1,0 +1,1 @@
+the official website: https://cs50.harvard.edu/ai/notes/0/
