@@ -180,20 +180,25 @@ Assign to node
 
 
 self.frontier[:-1] means All elements except the last element = Go from the beginning to just before the last element = Remove the last element
+
 ---
 
 ## Breadth‑First Search (BFS)
 
 The opposite of depth‑first search is **breadth‑first search (BFS)**.
 
-A breadth‑first search algorithm will follow *multiple directions at the same time*, taking one step in each possible direction before taking the second step in each direction. In this case, the frontier is managed as a **queue** data structure. The catchphrase you need to remember here is <mark>*first‑in first‑out*</mark>. All the new nodes line up in order, and nodes are considered based on which one was added first (*first come first served*). This results in a search algorithm that takes one step in each possible direction before taking a second step in any one direction.
+A breadth‑first search algorithm will follow *multiple directions at the same time*, taking one step in each possible direction before taking the second step in each direction. In this case, the frontier is managed as a **queue** data structure. 
+
+The catchphrase you need to remember here is <mark>*first‑in first‑out*</mark>. All the new nodes line up in order, and nodes are considered based on which one was added first (*first come first served*). This results in a search algorithm that takes one step in each possible direction before taking a second step in any one direction.
 
 *(Example from outside the lecture)*:  
-Suppose you are in a situation where you are looking for your keys. With a breadth‑first approach, if you start with your pants, you will look in your right pocket first. After this, instead of immediately looking in your left pocket, you will take a look in one drawer. Then on the table. And so on, in every location you can think of. Only after you have exhausted all the locations will you go back to your pants and search in the next pocket.
+Suppose you are in a situation where you are looking for your keys. With a breadth‑first approach, if you start with your pants, you will look in your right pocket first. 
+
+**After this, instead of immediately looking in your left pocket**, you will take a look in one drawer. Then on the table. And so on, in every location you can think of. Only after you have exhausted all the locations will you go back to your pants and search in the next pocket.
 
 **Pros of BFS**
 
-- This algorithm is **guaranteed** to find the *optimal* solution (assuming all step costs are equal).
+- This algorithm is **guaranteed** to find **the *optimal* solution** (assuming all step costs are equal).
 
 **Cons of BFS**
 
@@ -224,11 +229,16 @@ def remove(self):
 
 Breadth‑first and depth‑first are both **uninformed search** algorithms. That is, these algorithms do *not* utilize any knowledge about the problem that they did not acquire through their own exploration.
 
-However, very often some knowledge about the problem *is* available. For example, when a human maze‑solver enters a junction, the human can see which way goes in the general direction of the solution and which way does not. AI can do the same. A type of algorithm that considers additional knowledge to try to improve its performance is called an **informed search** algorithm.
+However, very often some knowledge about the problem *is* available. 
 
-**Greedy best‑first search** expands the node that seems closest to the goal, as determined by a heuristic function \(h(n)\). As its name suggests, the function *estimates* how close to the goal the next node is — but it can be mistaken.
+For example, when a human maze‑solver enters a junction, the human can see which way goes in the general direction of the solution and which way does not. AI can do the same. A type of algorithm that considers additional knowledge to try to improve its performance is called an **informed search** algorithm.
+
+<mark>**Greedy best‑first search** </mark> expands the node that seems closest to the goal, as determined by a heuristic function \(h(n)\). As its name suggests, the function *estimates* how close to the goal the next node is — but it can be mistaken.
 
 The efficiency of the greedy best‑first algorithm depends on how good the heuristic function is. For example, in a maze, an algorithm can use a heuristic function based on the **Manhattan distance** between the possible nodes and the end of the maze. The Manhattan distance ignores walls and simply counts how many steps up, down, left, or right it would take to get from one location to the goal location. This is an easy estimation that can be derived from the \((x, y)\) coordinates of the current location and the goal location.
+
+![alt text](l_00_02.png)
+
 
 <mark>Heuristics = educated guesses about distance to the goal.</mark>
 
@@ -253,13 +263,21 @@ Yet again, since this algorithm also relies on a heuristic, it is only as good a
 For A\* search to be **optimal**, the heuristic function \(h(n)\) should be:
 
 1. **Admissible** — it never *overestimates* the true cost.  
-2. **Consistent (monotonic)** — the estimated path cost to the goal of a new node plus the cost of transitioning to it from the previous node is *greater than or equal to* the estimated path cost to the goal of the previous node.  
+2. **Consistent (monotonic)** means that the estimated path cost to the goal of a new node, in addition to the cost of transitioning to it from the previous node, is greater than or equal to the estimated path cost to the goal of the previous node.
 
-   In equation form, \(h(n)\) is consistent if for every node \(n\) and successor node \(n'\) with step cost \(c\),
+In equation form, a heuristic function \( h(n) \) is **consistent** if, for every node \( n \) and successor node \( n' \) with step cost \( c \),
 
-   \[
-   h(n) \leq h(n') + c.
-   \]
+$$
+h(n) \leq h(n') + c
+$$
+
+where:
+
+- \( h(n) \): estimated cost from node \( n \) to the goal
+- \( h(n') \): estimated cost from successor node \( n' \) to the goal
+- \( c \): cost of moving from \( n \) to \( n' \)
+
+This property is also known as the **triangle inequality** for heuristic functions.
 
 ---
 
@@ -271,7 +289,7 @@ Often, AI that uses adversarial search is encountered in games, such as tic‑ta
 
 ---
 
-## Minimax
+## <mark>Minimax</mark>
 
 A key algorithm in adversarial search is **Minimax**. It represents winning conditions as **−1** for one side and **+1** for the other side. Further actions are driven by these conditions:
 
@@ -293,7 +311,12 @@ We can formalize tic‑tac‑toe using the following components (again, all of t
 
 Recursively, the algorithm simulates **all possible games** that can take place beginning at the current state and continuing until a terminal state is reached. Each terminal state is valued as either −1, 0, or +1.
 
-Knowing whose turn it is in a given state, the algorithm can determine whether the current player, when playing optimally, will pick the action that leads to a state with a lower or higher value. Alternating between *minimizing* and *maximizing*, the algorithm creates values for the states that would result from each possible action.
+![alt text](l_00_03.png)
+Minimax Algorithm in Tic Tac Toe
+
+Knowing whose turn it is in a given state, the algorithm can determine whether the current player, when playing optimally, will pick the action that leads to a state with a lower or higher value. 
+
+Alternating between *minimizing* and *maximizing*, the algorithm creates values for the states that would result from each possible action.
 
 A more concrete way to think about it:
 
@@ -304,6 +327,9 @@ A more concrete way to think about it:
 
 This back‑and‑forth reasoning continues *recursively* until terminal states are reached. Eventually, through this process, the maximizing player generates values for each state that could result from all possible actions at the current state. After obtaining these values, the maximizing player chooses the action with the **highest** value.
 
+![alt text](l_00_04.png)
+
+The Maximizer Considers the Possible Values of Future States.
 ### Minimax Pseudocode
 
 Visually, the maximizer considers the **possible values of future states**.
