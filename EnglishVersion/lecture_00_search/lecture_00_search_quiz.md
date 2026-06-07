@@ -29,7 +29,7 @@ BFS explores nodes level by level, so it guarantees the shortest path in an unwe
 
 # Question 2
 
-![alt text](image-1.png)
+![alt text](pictures/q_1.png)
 
 A search algorithm was run on a maze. Grey cells are walls. Yellow is the solution path. Red cells are explored but not part of the solution.
 
@@ -78,7 +78,7 @@ Depth-limited minimax is faster because it explores fewer states.
 
 # Question 4
 
-![alt text](lecture_00_search/pictures/q_2.png)
+![alt text](pictures/q_2.png)
 Consider the Minimax tree below, where the green up arrows indicate the MAX player and red down arrows indicate the MIN player. The leaf nodes are each labelled with their value.
 
 Minimax tree: compute root value.
