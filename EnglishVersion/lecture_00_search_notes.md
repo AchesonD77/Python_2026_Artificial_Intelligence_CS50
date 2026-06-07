@@ -40,10 +40,7 @@ A navigator app uses a typical search process, where the agent (the “thinking�
 
 However, there are many other forms of search problems, like puzzles or mazes.
 
-
-<p align="center">
-  <img src="l_00_00.png" width="400" alt="Lecture 0 Search Puzzle">
-</p>
+![alt text](lecture_00_search/pictures/l_00_00.png)
 
 Finding a solution to a **15‑puzzle** would require the use of a search algorithm. To formalize such problems, we introduce several key components (all of these are **core concepts** — <mark>very important</mark>):
 
@@ -71,9 +68,7 @@ Finding a solution to a **15‑puzzle** would require the use of a search algori
   
   The state space can be visualized as a directed graph with states represented as *nodes* and actions represented as arrows between nodes.
 
-<p align="center">
-  <img src="l_00_01.png" width="500" alt="Lecture 0 Search Puzzle">
-</p>
+![alt text](lecture_00_search/pictures/l_00_01.png)
 
 - **Goal Test**  
   The condition that determines whether a given state is a goal state. 
@@ -237,8 +232,7 @@ For example, when a human maze‑solver enters a junction, the human can see whi
 
 The efficiency of the greedy best‑first algorithm depends on how good the heuristic function is. For example, in a maze, an algorithm can use a heuristic function based on the **Manhattan distance** between the possible nodes and the end of the maze. The Manhattan distance ignores walls and simply counts how many steps up, down, left, or right it would take to get from one location to the goal location. This is an easy estimation that can be derived from the \((x, y)\) coordinates of the current location and the goal location.
 
-![alt text](l_00_02.png)
-
+![alt text](image.png)
 
 <mark>Heuristics = educated guesses about distance to the goal.</mark>
 
@@ -311,7 +305,7 @@ We can formalize tic‑tac‑toe using the following components (again, all of t
 
 Recursively, the algorithm simulates **all possible games** that can take place beginning at the current state and continuing until a terminal state is reached. Each terminal state is valued as either −1, 0, or +1.
 
-![alt text](l_00_03.png)
+![alt text](lecture_00_search/pictures/l_00_03.png)
 Minimax Algorithm in Tic Tac Toe
 
 Knowing whose turn it is in a given state, the algorithm can determine whether the current player, when playing optimally, will pick the action that leads to a state with a lower or higher value. 
@@ -327,8 +321,7 @@ A more concrete way to think about it:
 
 This back‑and‑forth reasoning continues *recursively* until terminal states are reached. Eventually, through this process, the maximizing player generates values for each state that could result from all possible actions at the current state. After obtaining these values, the maximizing player chooses the action with the **highest** value.
 
-![alt text](l_00_04.png)
-
+![alt text](lecture_00_search/pictures/l_00_04.png)
 The Maximizer Considers the Possible Values of Future States.
 ### Minimax Pseudocode
 
@@ -385,8 +378,7 @@ However, before finishing the computation for all the possible actions of the mi
 
 Therefore, computing additional possible actions for the minimizer at this point is **irrelevant** to the maximizer, because the maximizing player already has an unequivocally better choice whose value is 4.
 
-![alt text](l_00_05.png)
-
+![alt text](lecture_00_search/pictures/l_00_05.png)
 <mark>Alpha–Beta Pruning = avoid exploring branches that cannot improve the outcome.</mark>
 
 ---
