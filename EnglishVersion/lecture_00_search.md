@@ -368,7 +368,7 @@ def min_value(state):
 
 ---
 
-## Alpha–Beta Pruning
+## <mark>Alpha–Beta </mark>
 
 A way to **optimize** Minimax is **Alpha–Beta Pruning**. It skips some of the recursive computations that are clearly unfavorable.
 
@@ -385,13 +385,15 @@ However, before finishing the computation for all the possible actions of the mi
 
 Therefore, computing additional possible actions for the minimizer at this point is **irrelevant** to the maximizer, because the maximizing player already has an unequivocally better choice whose value is 4.
 
+![alt text](l_00_05.png)
+
 <mark>Alpha–Beta Pruning = avoid exploring branches that cannot improve the outcome.</mark>
 
 ---
 
-## Depth‑Limited Minimax
+## <mark>Depth‑Limited Minimax</mark>
 
-There are about **255,168** possible Tic‑Tac‑Toe games and roughly **10¹²⁰** possible games in Chess. The Minimax algorithm, as presented so far, requires generating **all** hypothetical games from a certain point to the terminal condition.
+There are about **255,168** possible Tic‑Tac‑Toe games and roughly **10²⁹⁰⁰⁰** possible games in Chess. The Minimax algorithm, as presented so far, requires generating **all** hypothetical games from a certain point to the terminal condition.
 
 While computing all the Tic‑Tac‑Toe games does not pose a challenge for a modern computer, doing so for Chess is currently impossible.
 
