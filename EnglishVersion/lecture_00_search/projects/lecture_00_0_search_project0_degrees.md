@@ -195,4 +195,5 @@ branch: ai50/projects/2024/x/degrees
 
 Data provided by **IMDb**
 
----
+## 📒 My notes:
+
