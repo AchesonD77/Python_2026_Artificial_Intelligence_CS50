@@ -1,6 +1,6 @@
 # CS50 AI - Project 0: Degrees
 
-# shortest_path() Deep Dive
+# shortest_path( ) Deep Dive
 
 ## Objective
 

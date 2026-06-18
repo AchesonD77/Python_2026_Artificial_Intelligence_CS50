@@ -196,4 +196,9 @@ branch: ai50/projects/2024/x/degrees
 Data provided by **IMDb**
 
 ## 📒 My notes:
+We know there are several functions in the degrees.py code, here are the details notes for each functions:
 
+you can read and learn 
+1. load_data(directory) - [click here to learn](lecture_00_1_project0_degrees_load_data().md)
+2. shortest_path(source, target) - [click here to learn](lecture_00_2_project0_degrees_shortest_path().md)
+3. person_id_for_name(name) and neighbors_for_person(person_id) - [click here to learn](lecture_00_3_project0_degrees_personid()_neighborsfor().md)
