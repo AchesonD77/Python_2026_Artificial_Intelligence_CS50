@@ -62,6 +62,7 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
+    # Prompt for source and target names
     source = person_id_for_name(input("Name: "))
     if source is None:
         sys.exit("Person not found.")
@@ -69,6 +70,7 @@ def main():
     if target is None:
         sys.exit("Person not found.")
 
+    # Calculate the shortest path between source and target
     path = shortest_path(source, target)
 
     if path is None:
