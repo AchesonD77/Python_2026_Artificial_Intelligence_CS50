@@ -21,7 +21,7 @@ What does *“reasoning based on knowledge to draw conclusions”* mean?
 
 ---
 
-## 🧪 Example (Harry Potter Logic)
+### 🧪 Example (Harry Potter Logic)
 
 Consider the following statements:
 
@@ -42,7 +42,7 @@ To come to this conclusion, we used logic, and today’s lecture explores how AI
 
 ---
 
-## 📖 Sentence
+### 📖 Sentence
 
 A sentence is an assertion about the world in a knowledge representation language.  
 AI uses sentences to store knowledge and infer new information.
@@ -60,7 +60,7 @@ They represent propositions about the world.
 
 ---
 
-## 🔗 Logical Connectives
+### 🔗 Logical Connectives
 
 Logical connectives are logical symbols that connect propositional symbols in order to reason in a more complex way about the world.
 
@@ -164,7 +164,7 @@ P → Q AND Q → P
 
 ---
 
-## 🧠 Model
+### 🧠 Model
 
 A model is an assignment of truth values to propositions.
 
@@ -185,7 +185,7 @@ In this case, we had 2 propositions, so 2²=4 possible models.
 
 ---
 
-## 📚 Knowledge Base (KB)
+### 📚 Knowledge Base (KB)
 
 A knowledge base is a set of sentences known to the AI agent.
 
@@ -195,7 +195,7 @@ Used to make logical inferences.
 
 ---
 
-## 📌 Entailment (⊨)
+### 📌 Entailment (⊨)
 
 α ⊨ β means:
 > In every model where α is true, β is also true.
@@ -385,3 +385,247 @@ The function will keep doing so until all symbols will have been assigned truth-
 ### 🎯 Summary
 
 <span style="background-color:#fff3b0"><b>Inference = reasoning by checking all possible models consistent with knowledge.</b></span>
+
+## 4. 🧠 Knowledge Engineering
+
+Knowledge engineering is the process of figuring out how to represent propositions and logic in AI.
+
+We practice it using the game **Clue**.
+
+---
+
+### 🎮 Clue Game Model
+
+In the game:
+- A murder is committed by a **person**
+- Using a **tool**
+- In a **location**
+
+Cards represent:
+- People
+- Tools
+- Locations
+
+One card from each category is placed in an envelope.
+
+We will use the Model Checking algorithm from before to uncover the mystery.
+
+In our model, we mark as **True** items that we know are related to the murder and **False** otherwise.
+
+### Goal:
+Determine **who did it, with what tool, and where**.
+
+---
+
+### 📌 Modeling Assumption
+
+We mark:
+- <mark>True</mark> → related to murder
+- <mark>False</mark> → not related
+
+---
+
+### 👥 Example Setup
+
+People:
+- Mustard
+- Plum
+- Scarlet
+
+Tools:
+- Knife
+- Revolver
+- Wrench
+
+Locations:
+- Ballroom
+- Kitchen
+- Library
+
+---
+
+### 📐 Knowledge Base Rules
+
+Exactly one from each category is true:
+
+- (Mustard ∨ Plum ∨ Scarlet)
+- (Knife ∨ Revolver ∨ Wrench)
+- (Ballroom ∨ Kitchen ∨ Library)
+
+---
+
+### 🃏 Observed Cards
+
+Let's start to paly together. Suppose our player gets the cards of Mustard, kitchen, and revolver.:
+
+Player sees:
+- Mustard
+- Kitchen
+- Revolver
+
+So we add:
+
+- ¬Mustard
+- ¬Kitchen
+- ¬Revolver
+
+---
+
+### 🧪 Guess Constraint
+
+In other situations in the game, one can make a guess, suggesting one combination of person, tool and location. 
+
+Suppose that the guess is that **Scarlet used a wrench to commit the crime in the library**. If this guess is wrong, then the following can be deduced and added to the KB:
+
+If guess is wrong:
+
+Scarlet + Library + Wrench
+
+→ At least one is false:
+
+<span style="background-color:#fff3b0"><b>(¬Scarlet ∨ ¬Library ∨ ¬Wrench)</b></span>
+
+---
+
+### 🧾 Additional Evidence
+
+Now, suppose someone shows us the Plum card. Thus, we can add
+
+If Plum card is shown:
+
+- ¬Plum
+
+Adding just one more piece of knowledge, for example, that it is not the ballroom, can give us more information. First, we update our KB
+
+If not ballroom:
+
+- ¬Ballroom
+
+---
+
+### 🧠 Final Deduction
+
+Using all constraints:
+
+We conclude:
+
+<span style="background-color:#fff3b0"><b>Scarlet committed the murder in the library using the knife.</b></span>
+
+Why:
+
+We can deduce that it’s the library because it has to be either the ballroom, the kitchen, or the library, and the first two were proven to not be the locations. However, when someone guessed Scarlet, library, wrench, the guess was false.
+
+Thus, at least one of the elements in this statement has to be false. Since we know both Scarlet and library to be true, we know that the wrench is the false part here.
+
+Since one of the three instruments has to be true, and it’s not the wrench nor the revolver, we can conclude that it is the knife.
+
+---
+
+### 💻 Python Knowledge Base
+
+Here is how the information would be added to the knowledge base in Python:
+
+```python
+# Add the clues to the KB
+knowledge = And(
+
+    # Start with the game conditions: one item in each of the three categories has to be true.
+    Or(mustard, plum, scarlet),
+    Or(ballroom, kitchen, library),
+    Or(knife, revolver, wrench),
+
+    # Add the information from the three initial cards we saw
+    Not(mustard),
+    Not(kitchen),
+    Not(revolver),
+
+    # Add the guess someone made that it is Scarlet, who used a wrench in the library
+    Or(Not(scarlet), Not(library), Not(wrench)),
+
+    # Add the cards that we were exposed to
+    Not(plum),
+    Not(ballroom)
+)
+```
+
+---
+
+### 🧩 Other Logic Puzzles
+
+### House Assignment Problem
+
+- 4 people
+- 4 houses
+
+Encoding is complex:
+- Each assignment becomes a proposition
+- Requires many OR constraints
+- Requires mutual exclusion rules
+
+👉 This motivates **First Order Logic**
+
+---
+
+### 🎯 Mastermind Game
+
+Game idea:
+- Guess color order
+- Receive feedback (how many correct positions)
+
+In this game, player one arranges colors in a certain order, and then player two has to guess this order.
+
+Each turn, player two makes a guess, and player one gives back a number, indicating how many colors player two got right. Let’s simulate a game with four colors.
+
+Example:
+- Guess → "2 correct"
+- Swap → "0 correct"
+- Final → "4 correct"
+
+---
+
+### ♟️ Play
+
+1. Suppose player two suggests the following ordering:
+
+![alt text](<picture/截屏2026-06-23 15.47.13.png>)
+
+Player one answers “two.” Thus we know that some two of the colors are in the correct position, and the other two are in the wrong place. 
+
+2. Based on this information, player two tries to switch the locations of two colors.
+
+![alt text](<picture/截屏2026-06-23 15.47.49.png>)
+
+Now player one answers “zero.” Thus, player two knows that the switched colors were in the right location initially, which means the untouched two colors were in the wrong location. 
+
+3. Player two switches them.
+
+![alt text](image.png)
+
+
+Player one says “four” and the game is over.
+
+
+### 🔢 Logical Encoding
+
+For 4 colors:
+- Need (number_of_colors)² propositions
+- e.g. red0, red1, red2, red3, blue0… Standing for color and position
+
+The next step is to represent the rules of the game in propositional logic
+Rules:
+- One color per position
+- No repetition
+
+The final step would be adding all the cues that we have to the KB.
+
+Using this knowledge, a Model Checking algorithm can give us the solution to the puzzle.
+
+---
+
+### 🧠 Key Insight
+
+<span style="background-color:#fff3b0"><b>All constraints + observations → can be solved using Model Checking</b></span>
+
+## 4. Inference Rules
+
+
