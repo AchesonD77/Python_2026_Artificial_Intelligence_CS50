@@ -626,6 +626,355 @@ Using this knowledge, a Model Checking algorithm can give us the solution to the
 
 <span style="background-color:#fff3b0"><b>All constraints + observations → can be solved using Model Checking</b></span>
 
-## 4. Inference Rules
+---
 
+## 4. 🧠 Inference Rules
+
+**Model Checking is not an efficient algorithm** because it must evaluate every possible model before producing an answer.
+
+A query **R is true** if it is true in **all models where the KB is true**.
+
+Inference rules allow us to generate new information based on existing knowledge without considering every possible model.
+
+---
+
+### 📌 Structure of Inference Rules
+
+Inference rules are written as:
+
+![alt text](<picture/截屏2026-06-25 17.44.01.png>)
+
+Inference rules are usually represented using **a horizontal bar** that separates **the top part, the premise**, from the **bottom part, the conclusion**. The premise is whatever knowledge we have, and the conclusion is what knowledge can be generated based on the premise.
+
+- Top: **premise**
+- Bottom: **conclusion**
+
+---
+
+### 🔥 Example (Modus Ponens)
+
+> If it is raining, then Harry is inside.  
+> It is raining.  
+> Therefore, Harry is inside.
+
+### Premises:
+- If raining → Harry inside
+- It is raining
+
+### Conclusion:
+- Harry is inside
+
+---
+
+### 📘 Modus Ponens
+
+which is a fancy way of saying that if we know an implication and its antecedent to be true, then the consequent is true as well.
+
+![alt text](<picture/截屏2026-06-25 17.52.27.png>)
+If:
+- α → β
+- α is true
+
+Then:
+- β is true
+
+---
+
+### ➗ AND Elimination
+If an And proposition is true, then any one atomic proposition within it is true as well.
+
+![alt text](<picture/截屏2026-06-25 17.54.38.png>)
+
+If:
+- α ∧ β is true
+
+Then:
+- α is true
+- β is true
+
+Example:
+If Harry is friends with Ron AND Hermione → he is friends with Hermione.
+
+---
+
+### ❌ Double Negation Elimination
+A proposition that is negated twice is true.
+
+![alt text](<picture/截屏2026-06-25 17.56.25.png>)
+
+¬(¬α) ≡ α
+
+Example:
+“Not true that Harry did not pass” → Harry passed.
+
+ We can parse it the following way: “It is not true that (Harry did not pass the test)”, or “¬(Harry did not pass the test)”, and, finally “¬(¬(Harry passed the test)).” 
+ 
+ The two negations cancel each other, marking the proposition “Harry passed the test” as true.
+
+---
+
+### ➡️ Implication Elimination
+An implication is equivalent to an Or relation between the negated antecedent and the consequent. 
+
+![alt text](<picture/截屏2026-06-25 17.59.57.png>)
+
+α → β ≡ ¬α ∨ β
+
+Truth intuition:
+- If α is false → implication is true
+- If β is true → implication is true
+
+---
+
+This one can be a little confusing. However, consider the following truth table:
+
+### 🔢 Truth Table Equivalence
+
+| P | Q | P→Q | ¬P∨Q |
+|---|---|-----|------|
+| F | F | T   | T    |
+| F | T | T   | T    |
+| T | F | F   | F    |
+| T | T | T   | T    |
+
+Since P → Q and ¬P ∨ Q have the same truth-value assignment, we know them to be equivalent logically.
+
+Another way to think about this is that an implication is true if either of two possible conditions is met: first, if the antecedent is false, the implication is trivially true (as discussed earlier, in the section on implication).
+
+This is represented by the negated antecedent P in ¬P ∨ Q, meaning that the proposition is always true if P is false. Second, the implication is true when the antecedent is true only when the consequent is true as well. That is, if P and Q are both true, then ¬P ∨ Q is true.
+
+However, if P is true and Q is not, then ¬P ∨ Q is false.
+
+
+---
+
+### ↔ Biconditional Elimination
+A biconditional proposition is equivalent to an implication and its inverse with an And connective.
+
+![alt text](<picture/截屏2026-06-25 18.17.26.png>)
+
+α ↔ β ≡ (α → β) ∧ (β → α)
+
+Example:
+“If and only if” statements split into two implications. 
+
+For example, “It is raining if and only if Harry is inside” is equivalent to (“If it is raining, Harry is inside” And “If Harry is inside, it is raining”).
+
+---
+
+### 📉 De Morgan’s Laws
+
+It is possible to turn an And connective into an Or connective. 
+
+Consider the following proposition: “It is not true that both Harry and Ron passed the test.
+#### Negation of AND:
+¬(α ∧ β) ≡ ¬α ∨ ¬β
+
+![alt text](<picture/截屏2026-06-25 18.44.08.png>)
+
+From this, it is possible to conclude that “It is not true that Harry passed the test” Or “It is not true that Ron passed the test.” That is, for the And proposition earlier to be true, at least one of the propositions in the Or propositions must be true.
+
+#### Negation of OR:
+¬(α ∨ β) ≡ ¬α ∧ ¬β
+
+![alt text](<picture/截屏2026-06-25 18.44.08.png>)
+
+Consider the proposition “It is not true that Harry or Ron passed the test.” This can be rephrased as “Harry did not pass the test” And “Ron did not pass the test.”
+
+### Distributive Property:
+
+A proposition with two elements that are grouped with And or Or connectives can be distributed, or broken down into, smaller units consisting of And and Or.
+
+![alt text](<picture/截屏2026-06-25 18.48.36.png>)
+
+![alt text](<picture/截屏2026-06-25 18.48.49.png>)
+---
+
+### 🔍 Knowledge and Search Problems
+
+Inference can be seen as a search problem:
+
+- Initial state: starting knowledge base KB
+- Actions: inference rules
+- Transition: new KB after inference
+- Goal: target statement - checking whether the statement that we are trying to prove is in the KB
+- Cost: number of proof steps
+
+---
+
+## 5. 🔥 Resolution
+
+Resolution is a powerful inference rule that states that if one of two atomic propositions in an Or proposition is false, the other has to be true.
+
+
+![alt text](<picture/截屏2026-06-25 19.20.21.png>)
+
+
+From:
+- P ∨ Q
+- ¬P
+
+Infer:
+- Q
+
+Resolution relies on Complementary Literals, two of the same atomic propositions where one is negated and the other is not, such as P and ¬P.
+
+---
+
+### 📌 Complementary Literals
+- P and ¬P cancel each other
+
+Resolution can be further generalized. Suppose that in addition to the proposition “Ron is in the Great Hall” Or “Hermione is in the library”, we also know that “Ron is not in the Great Hall” Or “Harry is sleeping.” 
+
+We can infer from this, using resolution, that “Hermione is in the library” Or “Harry is sleeping.
+
+![alt text](<picture/截屏2026-06-25 19.30.17.png>)
+
+Complementary literals allow us to generate new sentences through inferences by resolution. Thus, inference algorithms locate complementary literals to generate new knowledge.
+
+---
+
+### 🔁 CNF (Conjunctive Normal Form)
+
+A clause = OR of literals  
+A CNF = AND of clauses
+
+- A Clause is a disjunction of literals (a propositional symbol or a negation of a propositional symbol, such as P, ¬P). 
+- A disjunction consists of propositions that are connected with an Or logical connective (P ∨ Q ∨ R). 
+- A conjunction, on the other hand, consists of propositions that are connected with an And logical connective (P ∧ Q ∧ R). 
+- Clauses allow us to convert any logical statement into a Conjunctive Normal Form (CNF), which is a conjunction of clauses.
+- for example: (A ∨ B ∨ C) ∧ (D ∨ ¬E) ∧ (F ∨ G).
+
+
+---
+
+#### 🧾 CNF Conversion Steps (Steps in Conversion of Propositions to Conjunctive Normal Form)
+
+1. Eliminate biconditionals
+   - Turn (α ↔ β) into (α → β) ∧ (β → α).
+2. Eliminate implications  
+   - Turn (α → β) into ¬α ∨ β.
+3. Apply De Morgan’s laws  
+   - Turn ¬(α ∧ β) into ¬α ∨ ¬β
+4. Distribute OR over AND  
+
+```text
+Here’s an example of converting (P ∨ Q) → R to Conjunctive Normal Form:
+
+(P ∨ Q) → R
+¬(P ∨ Q) ∨ R /Eliminate implication
+(¬P ∧ ¬Q) ∨ R /De Morgan’s Law
+(¬P ∨ R) ∧ (¬Q ∨ R) /Distributive Law
+```
+---
+
+### ⚡ Factoring
+
+Remove duplicate literals inside clauses.
+
+- At this point, we can run an inference algorithm on the conjunctive normal form. Occasionally, through the process of inference by resolution, we might end up in cases where a clause contains the same literal twice. In these cases, a process called factoring is used, where the duplicate literal is removed. For example, (P ∨ Q ∨ S) ∧ (¬P ∨ R ∨ S) allow us to infer by resolution that (Q ∨ S ∨ R ∨ S). The duplicate S can be removed to give us (Q ∨ R ∨ S).
+
+---
+
+### ⛔ Empty Clause
+
+- Resolving a literal and its negation, i.e. ¬P and P, gives the empty clause (). The empty clause is always false, and this makes sense because it is impossible that both P and ¬P are true. This fact is used by the resolution algorithm.
+
+Resolving P and ¬P → empty clause ⊥
+
+- Represents contradiction
+- Always false
+
+---
+
+### 🧪 Proof by Contradiction
+
+- Proof by contradiction is a tool used often in computer science. If our knowledge base is true, and it contradicts ¬α, it means that ¬α is false, and, therefore, α must be true. More technically, the algorithm would perform the following actions:
+
+To prove KB ⊨ α:
+- Assume KB ∧ ¬α
+- Convert to CNF
+- Apply resolution
+- If empty clause appears → proven
+
+```text
+Here is an example that illustrates how this algorithm might work:
+
+Does (A ∨ B) ∧ (¬B ∨ C) ∧ (¬C) entail A?
+- First, to prove by contradiction, we assume that A is false. Thus, we arrive at (A ∨ B) ∧ (¬B ∨ C) ∧ (¬C) ∧ (¬A).
+- Now, we can start generating new information. Since we know that C is false (¬C), the only way (¬B ∨ C) can be true is if B is false, too. Thus, we can add (¬B) to our KB.
+- Next, since we know (¬B), the only way (A ∨ B) can be true is if A is true. Thus, we can add (A) to our KB.
+- Now our KB has two complementary literals, (A) and (¬A). We resolve them, arriving at the empty set, (). The empty set is false by definition, so we have arrived at a contradiction.
+```
+
+---
+
+## 6. 🧩 First Order Logic
+
+First-order logic extends propositional logic.
+
+First order logic is another type of logic that allows us to express more complex ideas more succinctly than propositional logic. First order logic uses two types of symbols: Constant Symbols and Predicate Symbols. Constant symbols represent objects, while predicate symbols are like relations or functions that take an argument and return a true or false value.
+
+---
+
+### 🔤 Symbols
+
+- Constant symbols: objects (Minerva, Gryffindor)
+- Predicate symbols: relations (Person(x), House(x))
+
+---
+
+### 🌍 Example
+
+For example, we can express the idea that Minerva is a person using the sentence Person(Minerva). Similarly, we can express the idea the Gryffindor is a house using the sentence House(Gryffindor). All the logical connectives work in first order logic the same way as before.
+
+Person(Minerva)  
+House(Gryffindor)
+
+For example, BelongsTo expresses a relation between two arguments, the person and the house to which the person belongs. Thus, the idea that Minerva belongs to Gryffindor can be expressed as BelongsTo(Minerva, Gryffindor).
+
+BelongsTo(Minerva, Gryffindor)
+
+This is more succinct than propositional logic, where each person—house assignment would require a different symbol.
+
+---
+
+### 🌐 Universal Quantification
+
+Quantification is a tool that can be used in first order logic to represent sentences without using a specific constant symbol. Universal quantification uses the symbol ∀ to express “for all.”
+
+∀x: “for all x”
+
+Example:
+∀x BelongsTo(x, Gryffindor) → ¬BelongsTo(x, Hufflepuff)
+
+ expresses the idea that it is true for every symbol that if this symbol belongs to Gryffindor, it does not belong to Hufflepuff.
+
+---
+
+### 🌱 Existential Quantification
+
+However, while universal quantification was used to create sentences that are true for all x, existential quantification is used to create sentences that are true for at least one x.
+
+∃x: “there exists x”
+
+Example:
+∃x House(x) ∧ BelongsTo(Minerva, x)
+
+ means that there is at least one symbol that is both a house and that Minerva belongs to it. In other words, this expresses the idea that Minerva belongs to a house.
+
+---
+
+### 🔥 Combined Quantifiers
+
+∀x Person(x) → ∃y House(y) ∧ BelongsTo(x, y)
+
+Meaning:
+Every person belongs to a house.
+
+---
+
+## 7. 🧠 Final Insight
+
+<span style="background-color:#fff3b0"><b>Logic systems unify reasoning, search, and knowledge representation in AI.</b></span>
 
