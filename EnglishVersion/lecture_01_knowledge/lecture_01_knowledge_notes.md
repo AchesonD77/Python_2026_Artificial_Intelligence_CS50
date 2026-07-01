@@ -599,7 +599,7 @@ Now player one answers “zero.” Thus, player two knows that the switched colo
 
 3. Player two switches them.
 
-![alt text](image.png)
+![alt text](<picture/截屏2026-06-23 15.49.12.png>)
 
 
 Player one says “four” and the game is over.
